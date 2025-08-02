@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Physics Mini App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #17212b; /* Telegram-like background */
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #1a1a1a;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.3);
+            max-width: 90%;
+            width: 600px;
+            text-align: center;
+            border: 1px solid #0ff;
+        }
+        h1 {
+            color: #0ff;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 8px rgba(0, 255, 255, 0.7);
+        }
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            text-align: left;
+            margin-top: 15px;
+        }
+        @media (max-width: 640px) {
+            .container {
+                padding: 20px;
+                max-width: 95%;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #17212b; /* Telegram-like background */
+            color: white;
+            font-family: sans-serif;
+            padding: 20px;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+        }
+
+        .topic-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .topic-content {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            width: 100%;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Grade 9 Physics</h1>
+        <div id="content"></div>
+    </div>
+
+    <script>
+        const topics = {
+            "newton": {
+                title: "የኒውተን የእንቅስቃሴ ሕጎች",
+                content: `ኒውተን ሶስት የእንቅስቃሴ ሕጎች የንቀት እና እንቅስቃሴን ማረዳት ይረዳሉ።
+
+1. የመጀመሪያው ሕግ (ህግ እረፍት፣ Inertia): አንድ አካል ምንም ውጪ ኃይል ካልተፈጸመበት ከዚህ በፊት በነበረበት እንቅስቃሴ ይቀጥላል።
+
+2. የሁለተኛው ሕግ (ሀላፊነት ከባህሪ ጋር): ኃይል = ጅምላ × ፍጥነት ለውጥ ($F = ma$)። ይህ ሕግ ኃይል ምን ያህል አካልን ይቀይራል ብሎ ይገልጻል።
+
+3. የሶስተኛው ሕግ: ለእያንዳንዱ ድርጊት ተቃራኒ እና እኩል ምላሽ ይኖረዋል። እንዲሁም ይህ በቀዳሚ እና ተቀባይ ኃይል መካከል ይታያል።`
+            },
+            "energy": {
+                title: "የኃይል አይነቶች",
+                content: `ኃይል ማለት ሥራ ለመስራት ያለ ችሎታ ነው። በተለያዩ መንገዶች ይገኛል።
+
+- የእንቅስቃሴ ኃይል (Kinetic Energy): አንድ አካል በእንቅስቃሴ ላይ ከሆነ የሚያሳየው ኃይል። $KE = \\frac{1}{2}mv^2$
+
+- የቦታ ኃይል (Potential Energy): አንድ አካል በከፍታ ላይ ከሆነ ያለው ተገኝቷል የሚለው ኃይል። $PE = mgh$
+
+- ሌሎች ኃይሎች: የሙቀት ኃይል፣ የኬሚካል ኃይል፣ የኑክሌር፣ ወይም የኤሌክትሪክ ኃይል የሚሆኑ ናቸው።`
+            },
+            "impulse": {
+                title: "ግፊት እና የእንቅስቃሴ ብዛት",
+                content: `ግፊት (Impulse) በአንድ ኃይል በአካል ላይ በተወሰነ ጊዜ ላይ የሚነካ ሁኔታ ነው።
+
+- ግፊት = ኃይል × ጊዜ
+- አሃዱ: ኒውተን-ሰከንድ (N·s)
+
+ለምሳሌ፡ አንድ ኃይል በአንድ አካል ላይ ብዙ ጊዜ ቢቆይ የእንቅስቃሴ ሁኔታው በጣም ይቀይራል።
+
+የእንቅስቃሴ ብዛት (Momentum) = ጅምላ × ፍጥነት
+ግፊት በመሆኑ ይህን ብዛት እንዴት እንደሚለዋወጥ ይገልጻል።`
+            }
+        };
+
+        const params = new URLSearchParams(window.location.search);
+        const topicKey = params.get("topic");
+
+        const container = document.getElementById("content");
+
+        if (topics[topicKey]) {
+            const title = document.createElement("div");
+            title.className = "topic-title";
+            title.textContent = topics[topicKey].title;
+
+            const paragraph = document.createElement("div");
+            paragraph.className = "topic-content";
+            paragraph.textContent = topics[topicKey].content;
+
+            container.appendChild(title);
+            container.appendChild(paragraph);
+        } else {
+            container.innerHTML = `
+                <div class="topic-content">Grade 9 Physics Tutorials – Stay with us"</div>
+            `;
+        }
+    </script>
+</body>
+</html>
