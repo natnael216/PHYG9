@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            background-color: #17212b; /* Telegram-like background */
+            background-color: #000;
             color: #fff;
             font-family: 'Inter', sans-serif;
             padding: 20px;
@@ -54,102 +54,91 @@
             }
         }
     </style>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <title>Physics Topics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            background-color: #17212b; /* Telegram-like background */
-            color: white;
-            font-family: sans-serif;
-            padding: 20px;
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-        }
+    body {
+      background-color: black;
+      color: white;
+      font-family: sans-serif;
+      padding: 20px;
+      user-select: none; /* disable copy/paste */
+      -webkit-user-select: none;
+      -moz-user-select: none;
+    }
 
-        .topic-title {
-            font-size: 1.5em;
-            font-weight: bold;
-            margin-bottom: 10px;
-            width: 100%;
-        }
+    .topic-title {
+      font-size: 1.5em;
+      font-weight: bold;
+      margin-bottom: 10px;
+      width: 100%;
+    }
 
-        .topic-content {
-            font-size: 1.1em;
-            line-height: 1.6;
-            margin-bottom: 30px;
-            width: 100%;
-            white-space: pre-wrap;
-        }
-    </style>
+    .topic-content {
+      font-size: 1.1em;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      width: 100%;
+      white-space: pre-wrap;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to Grade 9 Physics</h1>
-        <div id="content"></div>
-    </div>
+  <div id="content"></div>
 
-    <script>
-        const topics = {
-            "newton": {
-                title: "የኒውተን የእንቅስቃሴ ሕጎች",
-                content: `ኒውተን ሶስት የእንቅስቃሴ ሕጎች የንቀት እና እንቅስቃሴን ማረዳት ይረዳሉ።
+  <script>
+    const topics = {
+      "newton": {
+        title: "Newton's Laws of Motion",
+        content: `1. An object remains at rest or moves at constant velocity unless acted upon by a force.
+2. Force equals mass times acceleration (F = m × a).
+3. Every action has an equal and opposite reaction.`
+      },
+      "energy": {
+        title: "Forms of Energy",
+        content: `Energy is the capacity to do work.
+- Kinetic Energy: KE = 0.5 × m × v²
+- Potential Energy: PE = m × g × h
+- Other forms: Thermal, Chemical, Nuclear, Electrical`
+      },
+      "impulse": {
+        title: "Impulse and Momentum",
+        content: `Impulse is the change in momentum.
+Impulse = Force × Time
+Unit: Newton-second (N·s)
+It explains how long a force acts to change motion.`
+      }
+    };
 
-1. የመጀመሪያው ሕግ (ህግ እረፍት፣ Inertia): አንድ አካል ምንም ውጪ ኃይል ካልተፈጸመበት ከዚህ በፊት በነበረበት እንቅስቃሴ ይቀጥላል።
+    const params = new URLSearchParams(window.location.search);
+    const topicKey = params.get("topic");
 
-2. የሁለተኛው ሕግ (ሀላፊነት ከባህሪ ጋር): ኃይል = ጅምላ × ፍጥነት ለውጥ ($F = ma$)። ይህ ሕግ ኃይል ምን ያህል አካልን ይቀይራል ብሎ ይገልጻል።
+    const container = document.getElementById("content");
 
-3. የሶስተኛው ሕግ: ለእያንዳንዱ ድርጊት ተቃራኒ እና እኩል ምላሽ ይኖረዋል። እንዲሁም ይህ በቀዳሚ እና ተቀባይ ኃይል መካከል ይታያል።`
-            },
-            "energy": {
-                title: "የኃይል አይነቶች",
-                content: `ኃይል ማለት ሥራ ለመስራት ያለ ችሎታ ነው። በተለያዩ መንገዶች ይገኛል።
+    if (topics[topicKey]) {
+      const title = document.createElement("div");
+      title.className = "topic-title";
+      title.textContent = topics[topicKey].title;
 
-- የእንቅስቃሴ ኃይል (Kinetic Energy): አንድ አካል በእንቅስቃሴ ላይ ከሆነ የሚያሳየው ኃይል። $KE = \\frac{1}{2}mv^2$
+      const paragraph = document.createElement("div");
+      paragraph.className = "topic-content";
+      paragraph.textContent = topics[topicKey].content;
 
-- የቦታ ኃይል (Potential Energy): አንድ አካል በከፍታ ላይ ከሆነ ያለው ተገኝቷል የሚለው ኃይል። $PE = mgh$
-
-- ሌሎች ኃይሎች: የሙቀት ኃይል፣ የኬሚካል ኃይል፣ የኑክሌር፣ ወይም የኤሌክትሪክ ኃይል የሚሆኑ ናቸው።`
-            },
-            "impulse": {
-                title: "ግፊት እና የእንቅስቃሴ ብዛት",
-                content: `ግፊት (Impulse) በአንድ ኃይል በአካል ላይ በተወሰነ ጊዜ ላይ የሚነካ ሁኔታ ነው።
-
-- ግፊት = ኃይል × ጊዜ
-- አሃዱ: ኒውተን-ሰከንድ (N·s)
-
-ለምሳሌ፡ አንድ ኃይል በአንድ አካል ላይ ብዙ ጊዜ ቢቆይ የእንቅስቃሴ ሁኔታው በጣም ይቀይራል።
-
-የእንቅስቃሴ ብዛት (Momentum) = ጅምላ × ፍጥነት
-ግፊት በመሆኑ ይህን ብዛት እንዴት እንደሚለዋወጥ ይገልጻል።`
-            }
-        };
-
-        const params = new URLSearchParams(window.location.search);
-        const topicKey = params.get("topic");
-
-        const container = document.getElementById("content");
-
-        if (topics[topicKey]) {
-            const title = document.createElement("div");
-            title.className = "topic-title";
-            title.textContent = topics[topicKey].title;
-
-            const paragraph = document.createElement("div");
-            paragraph.className = "topic-content";
-            paragraph.textContent = topics[topicKey].content;
-
-            container.appendChild(title);
-            container.appendChild(paragraph);
-        } else {
-            container.innerHTML = `
-                <div class="topic-content">Grade 9 Physics Tutorials – Stay with us"</div>
-            `;
-        }
-    </script>
+      container.appendChild(title);
+      container.appendChild(paragraph);
+    } else {
+      container.innerHTML = `
+        <div class="topic-title">Topic Not Found</div>
+        <div class="topic-content">Try ?topic=newton, ?topic=energy, or ?topic=impulse in the URL.</div>
+      `;
+    }
+  </script>
 </body>
-</html>
+</html>  
