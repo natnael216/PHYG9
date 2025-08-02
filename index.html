@@ -1,418 +1,162 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Physics Concepts Explainer</title>
-    <!-- Tailwind CSS for basic styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Font: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        /* Custom styles for edge-to-edge black background and white text */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #000; /* Black background */
-            color: #fff; /* White text */
-            margin: 0;
-            padding: 0;
-            min-height: 100vh; /* Ensure full viewport height */
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start; /* Align content to the top */
-            align-items: center;
-        }
-        .container {
-            width: 100%; /* Edge to edge */
-            max-width: 100%; /* Ensure it doesn't exceed screen width */
-            padding: 1rem; /* Some padding for content */
-            box-sizing: border-box; /* Include padding in width calculation */
-        }
-        .topic-section {
-            display: none; /* Hidden by default, shown by JavaScript */
-            padding-bottom: 2rem; /* Space at the bottom of each section */
-        }
-        h1, h2, h3 {
-            color: #fff; /* Ensure headings are white */
-            margin-bottom: 1rem;
-        }
-        p {
-            margin-bottom: 1rem;
-            line-height: 1.6;
-            text-align: justify; /* Justify text for better readability */
-        }
-        ul {
-            list-style-type: disc;
-            margin-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        li {
-            margin-bottom: 0.5rem;
-        }
-        a {
-            color: #87CEEB; /* Light blue for links */
-            text-decoration: underline;
-        }
-        /* Responsive adjustments */
-        @media (min-width: 768px) {
-            .container {
-                padding: 2rem; /* More padding on larger screens */
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Physics Mini App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: #1e1e2d; /* Telegram-style dark */
+      color: #fff;
+      font-family: sans-serif;
+      margin: 0;
+      padding: 20px;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
+
+    ::selection {
+      background: none;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    p {
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
+
+    #content-wrapper {
+      max-width: 100%;
+      padding: 0;
+      margin: 0;
+    }
+
+    @media screen {
+      body:after {
+        content: '';
+        display: block;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
+        pointer-events: none;
+        background: rgba(0, 0, 0, 0);
+        z-index: 9999;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div id="content-wrapper">
+    <h1 id="title">Loading...</h1>
+    <p id="content"></p>
+  </div>
 
-    <div id="app-container" class="container">
-        <!-- Default content when no specific topic is requested -->
-        <div id="default-content" class="topic-section">
-            <h1 class="text-3xl font-bold mb-4">Welcome to the Physics Concepts Explainer!</h1>
-            <p class="text-lg">
-                This application provides detailed explanations of fundamental physics concepts.
-                To explore a specific topic, please use the provided links with the `startapp` parameter.
-            </p>
-            <p class="text-lg mt-4">
-                Here are some example links you might use (these are illustrative for the `startapp` parameter):
-            </p>
-            <ul class="list-disc ml-6 mt-2 text-lg">
-                <li><a href="?startapp=newton">Newton's Laws of Motion</a></li>
-                <li><a href="?startapp=acceleration">Acceleration</a></li>
-                <li><a href="?startapp=impulse">Impulse</a></li>
-                <li><a href="?startapp=work">Work and Energy</a></li>
-                <li><a href="?startapp=momentum">Momentum</a></li>
-            </ul>
-            <p class="text-lg mt-4">
-                Click on any of the links above (or use a Telegram mini-app link with the `startapp` parameter)
-                to dive into a specific physics concept.
-            </p>
-        </div>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-        <!-- Newton's Laws of Motion Section -->
-        <div id="newton-content" class="topic-section">
-            <h1 class="text-3xl font-bold mb-4">Newton's Laws of Motion</h1>
-            <p class="text-lg">
-                Sir Isaac Newton's three laws of motion are fundamental principles of classical mechanics that describe the relationship between a body and the forces acting upon it, and its motion in response to those forces. They were first compiled by Newton in his work *Philosophiæ Naturalis Principia Mathematica* (1687).
-            </p>
+  <script>
+    const topics = {
+      "newton": {
+        title: "Newton's Laws of Motion",
+        content: `Newton's laws describe motion:
 
-            <h2 class="text-2xl font-semibold mt-6 mb-3">Newton's First Law: Law of Inertia</h2>
-            <p class="text-lg">
-                "An object at rest stays at rest and an object in motion stays in motion with the same speed and in the same direction unless acted upon by an unbalanced force."
-            </p>
-            <p class="text-lg">
-                This law is often called the law of inertia. Inertia is the tendency of an object to resist changes in its state of motion. If an object is at rest, it will remain at rest unless a force causes it to move. If an object is moving, it will continue to move at a constant velocity (constant speed in a straight line) unless an external force acts on it. A common example is a ball rolling on a flat surface; it will eventually stop due to friction (an external force), but in an ideal frictionless environment, it would continue indefinitely.
-            </p>
+1. An object at rest stays at rest, and an object in motion stays in motion unless acted upon by an unbalanced force.
 
-            <h2 class="text-2xl font-semibold mt-6 mb-3">Newton's Second Law: Law of Acceleration</h2>
-            <p class="text-lg">
-                "The acceleration of an object as produced by a net force is directly proportional to the magnitude of the net force, in the same direction as the net force, and inversely proportional to the mass of the object."
-            </p>
-            <p class="text-lg">
-                This law is quantitatively expressed by the formula $\vec{F}_{\text{net}} = m\vec{a}$, where $\vec{F}_{\text{net}}$ is the net force acting on the object, $m$ is the mass of the object, and $\vec{a}$ is its acceleration. This means that a larger net force produces a larger acceleration, and a larger mass requires a larger force to achieve the same acceleration. For instance, pushing a small toy car requires less force to accelerate it than pushing a heavy truck.
-            </p>
+2. Acceleration is directly proportional to net force and inversely proportional to mass. (F = m × a)
 
-            <h2 class="text-2xl font-semibold mt-6 mb-3">Newton's Third Law: Law of Action-Reaction</h2>
-            <p class="text-lg">
-                "For every action, there is an equal and opposite reaction."
-            </p>
-            <p class="text-lg">
-                This law states that whenever one object exerts a force on a second object, the second object exerts an equal and opposite force on the first. These forces are called action-reaction pairs. They act on different objects and therefore do not cancel each other out. Examples include a rocket expelling gas downwards (action) and the rocket moving upwards (reaction), or a person pushing against a wall (action) and the wall pushing back on the person (reaction).
-            </p>
-        </div>
+3. For every action, there is an equal and opposite reaction.`
+      },
+      "impulse": {
+        title: "Impulse and Momentum",
+        content: `Impulse = Force × Time
 
-        <!-- Acceleration Section -->
-        <div id="acceleration-content" class="topic-section">
-            <h1 class="text-3xl font-bold mb-4">Acceleration</h1>
-            <p class="text-lg">
-                Acceleration is the rate at which the velocity of an object changes over time. Velocity is a vector quantity, meaning it has both magnitude (speed) and direction. Therefore, an object can accelerate in three ways:
-            </p>
-            <ul class="list-disc ml-6 mt-2 text-lg">
-                <li>By changing its speed (e.g., speeding up or slowing down).</li>
-                <li>By changing its direction (e.g., turning a corner at constant speed).</li>
-                <li>By changing both its speed and direction.</li>
-            </ul>
+Impulse changes an object's momentum.
 
-            <h2 class="text-2xl font-semibold mt-6 mb-3">Definition and Formula</h2>
-            <p class="text-lg">
-                Mathematically, average acceleration ($\vec{a}_{\text{avg}}$) is defined as the change in velocity ($\Delta \vec{v}$) divided by the time interval ($\Delta t$) over which the change occurs:
-            </p>
-            <p class="text-lg text-center font-mono my-4">
-                $$\vec{a}_{\text{avg}} = \frac{\Delta \vec{v}}{\Delta t} = \frac{\vec{v}_{\text{final}} - \vec{v}_{\text{initial}}}{\Delta t}$$
-            </p>
-            <p class="text-lg">
-                The unit of acceleration in the International System of Units (SI) is meters per second squared ($\text{m/s}^2$).
-            </p>
+Units: N·s or kg·m/s
 
-            <h2 class="text-2xl font-semibold mt-6 mb-3">Types of Acceleration</h2>
-            <ul class="list-disc ml-6 mt-2 text-lg">
-                <li>
-                    <strong>Positive Acceleration:</strong> Occurs when an object is speeding up in the direction of its motion. For example, a car accelerating from rest.
-                </li>
-                <li>
-                    <strong>Negative Acceleration (Deceleration):</strong> Occurs when an object is slowing down. This means the acceleration is in the opposite direction to the velocity. For example, a car braking.
-                </li>
-                <li>
-                    <strong>Centripetal Acceleration:</strong> The acceleration required to keep an object moving in a circular path. Even if the speed is constant, the direction is continuously changing, thus there is acceleration directed towards the center of the circle. This is given by $a_c = v^2/r$, where $v$ is speed and $r$ is the radius of the circle.
-                </li>
-                <li>
-                    <strong>Constant Acceleration:</strong> When the velocity changes by the same amount in every equal time interval. This is typical in free fall near the Earth's surface (ignoring air resistance), where the acceleration due to gravity is approximately $9.8 \text{ m/s}^2$ downwards.
-                </li>
-            </ul>
-            <p class="text-lg mt-4">
-                Understanding acceleration is crucial for analyzing motion and predicting the future state of moving objects, forming a cornerstone of kinematics and dynamics.
-            </p>
-        </div>
+Impulse explains why airbags, gloves, and pads protect us.`
+      },
+      "energy": {
+        title: "Forms of Energy",
+        content: `Energy is the ability to do work.
 
-        <!-- Impulse Section -->
-        <div id="impulse-content" class="topic-section">
-            <h1 class="text-3xl font-bold mb-4">Impulse</h1>
-            <p class="text-lg">
-                In physics, impulse ($\vec{J}$) is a concept closely related to momentum. It is defined as the change in momentum of an object. Alternatively, it can also be defined as the product of the average force acting on an object and the time interval over which the force acts. Impulse is a vector quantity, having both magnitude and direction.
-            </p>
+- Kinetic Energy: 0.5 × m × v²
+- Potential Energy: m × g × h
+- Thermal Energy
+- Chemical, Nuclear, Electrical
 
-            <h2 class="text-2xl font-semibold mt-6 mb-3">Definition and Formula</h2>
-            <p class="text-lg">
-                The formula for impulse is:
-            </p>
-            <p class="text-lg text-center font-mono my-4">
-                $$\vec{J} = \vec{F}_{\text{avg}} \Delta t$$
-            </p>
-            <p class="text-lg">
-                Where $\vec{J}$ is the impulse, $\vec{F}_{\text{avg}}$ is the average net force applied, and $\Delta t$ is the time interval over which the force is applied.
-            </p>
-            <p class="text-lg">
-                According to the impulse-momentum theorem, the impulse acting on an object is equal to the change in its momentum:
-            </p>
-            <p class="text-lg text-center font-mono my-4">
-                $$\vec{J} = \Delta \vec{p} = \vec{p}_{\text{final}} - \vec{p}_{\text{initial}}$$
-            </p>
-            <p class="text-lg">
-                Where $\Delta \vec{p}$ is the change in momentum, $\vec{p}_{\text{final}}$ is the final momentum, and $\vec{p}_{\text{initial}}$ is the initial momentum. Momentum ($\vec{p}$) itself is defined as the product of an object's mass ($m$) and its velocity ($\vec{v}$), i.e., $\vec{p} = m\vec{v}$.
-            </p>
-            <p class="text-lg">
-                The SI unit for impulse is Newton-second ($\text{N} \cdot \text{s}$), which is equivalent to kilogram-meter per second ($\text{kg} \cdot \text{m/s}$), the unit for momentum.
-            </p>
+Energy can be converted but not destroyed.`
+      },
+      "distance": {
+        title: "Distance and Displacement",
+        content: `Distance is the total path covered by an object during motion.
 
-            <h2 class="text-2xl font-semibold mt-6 mb-3">Applications of Impulse</h2>
-            <p class="text-lg">
-                The concept of impulse is particularly useful in situations where forces act for a very short duration, such as collisions or impacts.
-            </p>
-            <ul class="list-disc ml-6 mt-2 text-lg">
-                <li>
-                    <strong>Safety Features:</strong> Airbags in cars increase the time interval ($\Delta t$) over which the force acts during a collision. By increasing $\Delta t$, the average force ($\vec{F}_{\text{avg}}$) experienced by the occupant is reduced for the same change in momentum, thereby minimizing injury.
-                </li>
-                <li>
-                    <strong>Sports:</strong> In sports like baseball or golf, athletes try to maximize the impulse applied to the ball by increasing both the force and the time of contact, resulting in a greater change in the ball's momentum and thus a higher speed.
-                </li>
-                <li>
-                    <strong>Jumping/Landing:</strong> When a person lands from a jump, bending their knees increases the time over which the force of impact is applied, reducing the peak force on their joints.
-                </li>
-            </ul>
-            <p class="text-lg mt-4">
-                Impulse provides a powerful way to analyze interactions where forces are not constant or are difficult to measure directly over short durations, by focusing on the resulting change in momentum.
-            </p>
-        </div>
+Key points:
+- It is a scalar quantity (only magnitude).
+- Measured in meters (m) in SI units.
+- Always positive.
+- Distance does not consider direction.
 
-        <!-- Work and Energy Section -->
-        <div id="work-content" class="topic-section">
-            <h1 class="text-3xl font-bold mb-4">Work and Energy</h1>
-            <p class="text-lg">
-                Work and energy are two of the most fundamental concepts in physics, deeply intertwined and essential for understanding how systems change and interact. Energy is the capacity to do work, while work is the process of transferring energy.
-            </p>
+Displacement:
+- It is the shortest straight-line path from initial to final position.
+- It is a vector quantity (has magnitude and direction).
+- Displacement can be zero or negative depending on direction.
 
-            <h2 class="text-2xl font-semibold mt-6 mb-3">Work</h2>
-            <p class="text-lg">
-                In physics, work ($W$) is done when a force causes a displacement of an object. More precisely, work is the product of the component of the force in the direction of the displacement and the magnitude of the displacement.
-            </p>
-            <p class="text-lg text-center font-mono my-4">
-                $$W = F d \cos(\theta)$$
-            </p>
-            <p class="text-lg">
-                Where $F$ is the magnitude of the force, $d$ is the magnitude of the displacement, and $\theta$ is the angle between the force vector and the displacement vector. If the force is in the same direction as the displacement, $\theta = 0^\circ$ and $\cos(0^\circ) = 1$, so $W = Fd$. If the force is perpendicular to the displacement, $\theta = 90^\circ$ and $\cos(90^\circ) = 0$, so no work is done.
-            </p>
-            <p class="text-lg">
-                The SI unit of work is the Joule ($\text{J}$), which is equivalent to a Newton-meter ($\text{N} \cdot \text{m}$). Work is a scalar quantity.
-            </p>
+Example:
+If you walk 3 meters forward and then 3 meters back, the distance = 6 meters, but displacement = 0 meters.`
+      }
+    };
 
-            <h2 class="text-2xl font-semibold mt-6 mb-3">Energy</h2>
-            <p class="text-lg">
-                Energy is a scalar quantity that represents the capacity to do work. It exists in various forms, and one form can be converted into another. The SI unit of energy is also the Joule ($\text{J}$).
-            </p>
+    function updateContent(topicKey) {
+      const titleElement = document.getElementById("title");
+      const contentElement = document.getElementById("content");
 
-            <h3 class="text-xl font-semibold mt-4 mb-2">Kinetic Energy ($\text{KE}$)</h3>
-            <p class="text-lg">
-                Kinetic energy is the energy an object possesses due to its motion. It depends on the object's mass and speed.
-            </p>
-            <p class="text-lg text-center font-mono my-4">
-                $$\text{KE} = \frac{1}{2} m v^2$$
-            </p>
-            <p class="text-lg">
-                Where $m$ is the mass of the object and $v$ is its speed.
-            </p>
+      const topic = topics[topicKey];
 
-            <h3 class="text-xl font-semibold mt-4 mb-2">Potential Energy ($\text{PE}$)</h3>
-            <p class="text-lg">
-                Potential energy is stored energy that depends on the relative position of various parts of a system. Common types include:
-            </p>
-            <ul class="list-disc ml-6 mt-2 text-lg">
-                <li>
-                    <strong>Gravitational Potential Energy ($\text{GPE}$):</strong> Energy stored due to an object's height in a gravitational field.
-                    <p class="text-lg text-center font-mono my-2">
-                        $$\text{GPE} = mgh$$
-                    </p>
-                    Where $m$ is mass, $g$ is the acceleration due to gravity, and $h$ is height.
-                </li>
-                <li>
-                    <strong>Elastic Potential Energy ($\text{EPE}$):</strong> Energy stored in elastic materials (like springs) when they are stretched or compressed.
-                    <p class="text-lg text-center font-mono my-2">
-                        $$\text{EPE} = \frac{1}{2} k x^2$$
-                    </p>
-                    Where $k$ is the spring constant and $x$ is the displacement from equilibrium.
-                </li>
-            </ul>
+      if (topic) {
+        titleElement.textContent = topic.title;
+        contentElement.textContent = topic.content;
+      } else {
+        titleElement.textContent = "Topic Not Found";
+        contentElement.textContent = "This topic is not in our database. Use the bot to get a valid topic link.";
+      }
+    }
 
-            <h2 class="text-2xl font-semibold mt-6 mb-3">Work-Energy Theorem</h2>
-            <p class="text-lg">
-                The work-energy theorem states that the net work done on an object is equal to the change in its kinetic energy.
-            </p>
-            <p class="text-lg text-center font-mono my-4">
-                $$W_{\text{net}} = \Delta \text{KE} = \text{KE}_{\text{final}} - \text{KE}_{\text{initial}}$$
-            </p>
-            <p class="text-lg">
-                This theorem provides a powerful alternative to Newton's laws for solving problems involving forces and motion, especially when forces are not constant.
-            </p>
+    document.addEventListener('DOMContentLoaded', () => {
+      let topicKey = null;
 
-            <h2 class="text-2xl font-semibold mt-6 mb-3">Conservation of Energy</h2>
-            <p class="text-lg">
-                One of the most profound principles in physics is the law of conservation of energy, which states that energy cannot be created or destroyed, only transformed from one form to another. In an isolated system, the total mechanical energy (sum of kinetic and potential energy) remains constant if only conservative forces (like gravity or spring force) are doing work.
-            </p>
-            <p class="text-lg text-center font-mono my-4">
-                $$\text{KE}_{\text{initial}} + \text{PE}_{\text{initial}} = \text{KE}_{\text{final}} + \text{PE}_{\text{final}}$$
-            </p>
-            <p class="text-lg">
-                This principle is fundamental to understanding energy transformations in various physical processes, from simple pendulums to complex machines.
-            </p>
-        </div>
-
-        <!-- Momentum Section -->
-        <div id="momentum-content" class="topic-section">
-            <h1 class="text-3xl font-bold mb-4">Momentum</h1>
-            <p class="text-lg">
-                Momentum ($\vec{p}$) is a fundamental concept in physics, representing the "quantity of motion" an object possesses. It is a vector quantity, meaning it has both magnitude and direction. Momentum is crucial for analyzing collisions and interactions between objects.
-            </p>
-
-            <h2 class="text-2xl font-semibold mt-6 mb-3">Definition and Formula</h2>
-            <p class="text-lg">
-                Momentum is defined as the product of an object's mass ($m$) and its velocity ($\vec{v}$).
-            </p>
-            <p class="text-lg text-center font-mono my-4">
-                $$\vec{p} = m\vec{v}$$
-            </p>
-            <p class="text-lg">
-                The SI unit for momentum is kilogram-meter per second ($\text{kg} \cdot \text{m/s}$).
-            </p>
-            <p class="text-lg">
-                From this definition, it's clear that a heavier object moving at the same velocity will have more momentum than a lighter object. Similarly, an object moving faster will have more momentum than the same object moving slower.
-            </p>
-
-            <h2 class="text-2xl font-semibold mt-6 mb-3">Conservation of Momentum</h2>
-            <p class="text-lg">
-                One of the most important principles involving momentum is the Law of Conservation of Momentum. This law states that if no external forces act on a system of objects, the total momentum of the system remains constant. In other words, the total momentum before a collision or interaction is equal to the total momentum after the collision or interaction.
-            </p>
-            <p class="text-lg text-center font-mono my-4">
-                $$\sum \vec{p}_{\text{initial}} = \sum \vec{p}_{\text{final}}$$
-            </p>
-            <p class="text-lg">
-                This principle is particularly useful for analyzing collisions (elastic and inelastic) and explosions, where internal forces are significant but external forces are negligible over the short duration of the event.
-            </p>
-
-            <h3 class="text-xl font-semibold mt-4 mb-2">Types of Collisions</h3>
-            <ul class="list-disc ml-6 mt-2 text-lg">
-                <li>
-                    <strong>Elastic Collisions:</strong> Collisions in which both momentum and kinetic energy are conserved. Objects bounce off each other without deformation or heat loss. Example: ideal billiard ball collisions.
-                </li>
-                <li>
-                    <strong>Inelastic Collisions:</strong> Collisions in which momentum is conserved, but kinetic energy is not (some kinetic energy is converted into other forms like heat, sound, or deformation). Objects may stick together after the collision. Example: a car crash where vehicles crumple.
-                </li>
-            </ul>
-
-            <h2 class="text-2xl font-semibold mt-6 mb-3">Relationship with Newton's Second Law</h2>
-            <p class="text-lg">
-                Newton's Second Law can also be expressed in terms of momentum: the net force acting on an object is equal to the rate of change of its momentum.
-            </p>
-            <p class="text-lg text-center font-mono my-4">
-                $$\vec{F}_{\text{net}} = \frac{\Delta \vec{p}}{\Delta t}$$
-            </p>
-            <p class="text-lg">
-                This formulation highlights the connection between force, time, and the change in an object's motion, leading directly to the concept of impulse.
-            </p>
-        </div>
-
-    </div>
-
-    <script>
-        // Function to parse URL parameters
-        function getQueryParam(param) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param);
+      if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.ready();
+        if (Telegram.WebApp.initDataUnsafe?.start_param) {
+          topicKey = Telegram.WebApp.initDataUnsafe.start_param;
         }
+      }
 
-        // Function to show the correct content section
-        function showContentForTopic() {
-            // Get the value of the 'startapp' parameter
-            const startAppParam = getQueryParam('startapp');
+      if (!topicKey) {
+        const urlParams = new URLSearchParams(window.location.search);
+        topicKey = urlParams.get("topic");
+      }
 
-            // Map of startapp values to content section IDs
-            const topicMap = {
-                'newton': 'newton-content',
-                'acceleration': 'acceleration-content',
-                'impulse': 'impulse-content',
-                'work': 'work-content',
-                'momentum': 'momentum-content'
-                // Add more topics here as needed
-            };
-
-            // Get all topic sections
-            const topicSections = document.querySelectorAll('.topic-section');
-
-            // Hide all topic sections first
-            topicSections.forEach(section => {
-                section.style.display = 'none';
-            });
-
-            // Determine which section to show
-            let sectionToShowId = 'default-content'; // Default to welcome message
-
-            if (startAppParam && topicMap[startAppParam.toLowerCase()]) {
-                sectionToShowId = topicMap[startAppParam.toLowerCase()];
-            }
-
-            // Show the determined section
-            const targetSection = document.getElementById(sectionToShowId);
-            if (targetSection) {
-                targetSection.style.display = 'block';
-            }
-        }
-
-        // Run the function when the page loads
-        window.onload = showContentForTopic;
-
-        // Load MathJax for LaTeX rendering
-        // It's important to load MathJax after the DOM content is available
-        // to ensure it can process the LaTeX in the content sections.
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-        script.async = true;
-        document.head.appendChild(script);
-
-        // Configure MathJax to process new content if dynamically added later
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']]
-            },
-            svg: {
-                fontCache: 'global'
-            }
-        };
-    </script>
+      if (topicKey) {
+        updateContent(topicKey);
+      } else {
+        document.getElementById("title").textContent = "Welcome to Physics Mini App";
+        document.getElementById("content").textContent =
+          "Use the Telegram bot to open a topic (e.g., ?startapp=newton or ?topic=impulse).";
+      }
+    });
+  </script>
 </body>
 </html>
